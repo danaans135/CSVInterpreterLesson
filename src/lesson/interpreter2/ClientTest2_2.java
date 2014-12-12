@@ -13,6 +13,7 @@ public class ClientTest2_2 {
     private String text;
     private int index;
     private CsvData csvData;
+    private List<String> tmpRecord;
 
     public static void main(String[] args) {
         ClientTest2_2 instance = new ClientTest2_2();
@@ -21,7 +22,7 @@ public class ClientTest2_2 {
 
 
     public ClientTest2_2() {
-        String str = "a,b,c,\"d,d\",e\r\n1,2,3,4\r\n5,6,7";
+        String str = "a,  b  ,c,\"d,d\",e\r\n1,2,3,4\r\n5,6,7";
         csv(str);
 //        System.out.println(ret);
     }
@@ -34,7 +35,6 @@ public class ClientTest2_2 {
         csvData = new CsvData();
         file();
         System.out.println(csvData);
-        csvData.getRecords().get(1).get(1);
 //        csvData.row(1);
 //        csvData.cell(1,1);
     }
@@ -52,8 +52,19 @@ public class ClientTest2_2 {
         }
     }
 
+    private void preRecord() {
+        tmpRecord = new ArrayList<>();
+    }
+
+    private void postRecord() {
+//        csvData.getRecords().add(fields);
+//        System.out.println(fields);
+        csvData.getRecords().add(tmpRecord);
+    }
+
     // record = field *(COMMA field)
     private void record() {
+        preRecord();
         List<String> fields = new ArrayList<>();
         fields.add(field());
         String commaStr = null;
